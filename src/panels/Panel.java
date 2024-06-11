@@ -64,6 +64,7 @@ public class Panel extends JPanel {
 		north.add(end);
 		
 		end.setActionCommand("CANCEL");
+		end.setEnabled(false);
 		
 		JPanel center = new JPanel();
 		center.setLayout(new GridLayout(1, 3));

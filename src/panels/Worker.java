@@ -9,7 +9,7 @@ import javax.swing.SwingWorker;
 //SwingWorker<[lo que devuleve doInBackgorund() al acabar],[parametro del publish, lo que se devuelve en valores intermedios(publish() y process())]>
 public class Worker extends SwingWorker<String, Integer[]> {
 
-	//Que tipo de Worker es
+	// Que tipo de Worker es
 	public enum primT {
 		twins, cousins, sexy
 	}
@@ -19,7 +19,7 @@ public class Worker extends SwingWorker<String, Integer[]> {
 	private int total;
 	private JProgressBar pBar;
 
-	//Cosntructor
+	// Cosntructor
 	public Worker(JTextArea textArea, primT a, int total, JProgressBar pBar) {
 		this.textArea = textArea;
 		this.type = a;
@@ -33,7 +33,7 @@ public class Worker extends SwingWorker<String, Integer[]> {
 		int cont = 0;
 		while (cont < total) {
 			if (Primes.isPrime(numI)) {
-				//Escogemos por cada caso
+				// Escogemos por cada caso
 				switch (this.type) {
 				case twins:
 					if (nextPrim(cont, numI, 2)) {
@@ -61,7 +61,7 @@ public class Worker extends SwingWorker<String, Integer[]> {
 	// Function to test if next num, depending on worker type, is prim
 	private boolean nextPrim(int cont, int numI, int sum) {
 		boolean ret = false;
-		//sum indica el tipo de Worker (2,4,6)
+		// sum indica el tipo de Worker (2,4,6)
 		int numToC = numI + sum;
 		if (Primes.isPrime(numToC)) {
 			Integer arr[] = { cont, numI, numToC };
@@ -73,7 +73,7 @@ public class Worker extends SwingWorker<String, Integer[]> {
 
 	@Override
 	protected void process(List<Integer[]> chunks) {
-		//Procesamos los publis hecho en doInBackground()
+		// Procesamos los publish hecho en doInBackground()
 		if ((chunks.get(0)[0] % 5) == 0 && chunks.get(0)[0] != 0) {
 			this.textArea.setText(this.textArea.getText() + "\n");
 		}
@@ -81,7 +81,7 @@ public class Worker extends SwingWorker<String, Integer[]> {
 				this.textArea.getText() + chunks.get(0)[0] + ":[" + chunks.get(0)[1] + " " + chunks.get(0)[2] + "], ");
 
 		// this.total-->100%;
-		int value = ((chunks.get(0)[0] * 100) / this.total-1);
+		int value = ((chunks.get(0)[0] * 100) / this.total - 1);
 
 		this.pBar.setValue(value);
 	}
@@ -91,8 +91,11 @@ public class Worker extends SwingWorker<String, Integer[]> {
 		try {
 			this.textArea.setText(this.textArea.getText() + "\n" + get().toString());
 			this.pBar.setValue(100);
+			
+			Controller.allFinished();
 		} catch (Exception e) {
-			this.textArea.setText("Cancelled\n");
+			System.err.println(e);
+			this.textArea.setText("Cancelllaoaooao\n");
 			this.pBar.setValue(0);
 		}
 	}
