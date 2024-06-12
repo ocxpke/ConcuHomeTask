@@ -7,13 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import panels.Controller;
 import panels.Panel;
-import javax.swing.JProgressBar;
 
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JProgressBar progressBar1, progressBar2, progressBar3;
 	private Controller ctr;
 
 	/**
@@ -49,20 +47,8 @@ public class MainFrame extends JFrame {
 		p.setBounds(203, 10, 978, 277);
 		contentPane.add(p);
 		setContentPane(contentPane);
-
-		progressBar1 = new JProgressBar();
-		progressBar1.setBounds(203, 298, 305, 20);
-		contentPane.add(progressBar1);
-
-		progressBar2 = new JProgressBar();
-		progressBar2.setBounds(531, 298, 305, 20);
-		contentPane.add(progressBar2);
-
-		progressBar3 = new JProgressBar();
-		progressBar3.setBounds(855, 298, 305, 20);
-		contentPane.add(progressBar3);
 		
-		ctr = new Controller(p, progressBar1, progressBar2, progressBar3);
+		ctr = new Controller(p);
 		p.setController(ctr);
 
 	}

@@ -1,8 +1,6 @@
 package panels;
 
 import java.util.List;
-
-import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
@@ -15,16 +13,14 @@ public class Worker extends SwingWorker<String, Integer[]> {
 	}
 
 	private JTextArea textArea;
-	private primT type;
+	public primT type;
 	private int total;
-	private JProgressBar pBar;
 
 	// Cosntructor
-	public Worker(JTextArea textArea, primT a, int total, JProgressBar pBar) {
+	public Worker(JTextArea textArea, primT a, int total) {
 		this.textArea = textArea;
 		this.type = a;
 		this.total = total;
-		this.pBar = pBar;
 	}
 
 	@Override
@@ -82,21 +78,23 @@ public class Worker extends SwingWorker<String, Integer[]> {
 
 		// this.total-->100%;
 		int value = ((chunks.get(0)[0] * 100) / this.total - 1);
-
-		this.pBar.setValue(value);
+		if(value<=0) {
+			value=1;
+		}
+		this.setProgress(value);
 	}
 
 	@Override
 	protected void done() {
 		try {
 			this.textArea.setText(this.textArea.getText() + "\n" + get().toString());
-			this.pBar.setValue(100);
-			
+			this.setProgress(100);
+			Controller.finishedThread(this.type);
 			Controller.allFinished();
 		} catch (Exception e) {
-			System.err.println(e);
-			this.textArea.setText("Cancelllaoaooao\n");
-			this.pBar.setValue(0);
+			this.setProgress(0);
+			this.textArea.setText("Cancelled\n");
+			
 		}
 	}
 
